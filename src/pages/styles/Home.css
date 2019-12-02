@@ -1,0 +1,32 @@
+.Home {
+  height: calc(100vh - 60px);
+  background: url('../../images/estrellas.svg') #1B1B25;
+  background-size: cover;
+  background-position: center;
+  background-repeat: repeat;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+}
+
+.Home__hero {
+  display: flex;
+  align-items: center;
+}
+
+.Home__hero-description {
+  margin-right: 5rem;
+  text-align: center;
+}
+
+.Home__hero-description h1 {
+  margin-top: 2rem;
+}
+
+.Home__hero-description p {
+  text-align: left;
+}
+
+.Home__hero-image {
+  margin-left: 5rem;
+}

@@ -1,28 +1,45 @@
-import React from 'react'
-import './styles/BadgesList.css'
+import React from 'react';
 
-class BadgesList extends React.Component {
-  render () {
+import './styles/BadgesList.css';
+
+class BadgesListItem extends React.Component {
+  render() {
     return (
-      <div className="BadgesList">
-        <ul className="list-unstyled">
-          { this.props.badges.map((badge) => {
-            return (
-              <li key={ badge.id }>
-                <div className="BadgesList__item">
-                  <img className="BadgesList__item-avatar" src={ badge.avatarUrl } alt="UserAvatar"/>
-                  <div className="BadgesList__item-info">
-                    <p>{ badge.firstName } { badge.lastName }</p>
-                    <p>{ badge.jobTitle }</p>
-                  </div>
-                </div>
-              </li>
-            )
-          }) }
-        </ul>
+      <div className="BadgesListItem">
+        <img
+          className="BadgesListItem__avatar"
+          src={this.props.badge.avatarUrl}
+          alt={`${this.props.badge.firstName} ${this.props.badge.lastName}`}
+        />
+
+        <div>
+          <strong>
+            {this.props.badge.firstName} {this.props.badge.lastName}
+          </strong>
+          <br /> <span>@{this.props.badge.twitter}</span>
+          <br /> {this.props.badge.jobTitle}
+        </div>
       </div>
-    )
+    );
   }
 }
 
-export default BadgesList
+class BadgesList extends React.Component {
+  render() {
+    return (
+      <div className="BadgesList">
+        <ul className="list-unstyled">
+          {this.props.badges.map(badge => {
+            return (
+              <li key={badge.id}>
+                <BadgesListItem badge={badge} />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  }
+}
+
+export default BadgesList;
