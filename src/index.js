@@ -6,7 +6,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import './global.css'
 
 // Importacion de componentes
-import Badges from './pages/Badges';
 import App from './components/App';
 
 const container = document.getElementById('app');

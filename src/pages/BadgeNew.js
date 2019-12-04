@@ -1,13 +1,19 @@
-import React from 'react';
+import React from 'react'
 // Estilos
-import './styles/BadgeNew.css';
-import header from '../images/badge-header.svg';
+import './styles/BadgeNew.css'
+import header from '../images/platziconf-logo.svg'
 // Componentes
-import Badge from '../components/Badge';
-import BadgeForm from '../components/BadgeForm';
+import Badge from '../components/Badge'
+import BadgeForm from '../components/BadgeForm'
+import PageLoading from '../components/PageLoading'
+import PageError from '../components/PageError'
+
+import api from '../api'
 
 class BadgeNew extends React.Component {
-  state = { 
+  state = {
+    loading: false,
+    error: null,
     form: {
       firstName: '',
       lastName: '',
@@ -15,7 +21,7 @@ class BadgeNew extends React.Component {
       jobTitle: '',
       twitter: ''
     } 
-  };
+  }
 
   handleChange = (e) => {
     this.setState({
@@ -26,11 +32,30 @@ class BadgeNew extends React.Component {
     })
   }
 
+  handleSubmit = async (e) => {
+    e.preventDefault()
+    this.setState({ loading: true, error: null })
+
+    try {
+      await api.badges.create(this.state.form)
+      this.setState({ loading: false })
+
+      this.props.history.push('/badges');
+    } catch (error) {
+      this.setState({ loading: false, error: error })
+    }
+  }
+
   render () {
+
+    if (this.state.loading) {
+      return <PageLoading />
+    }
+
     return (
       <React.Fragment>
         <div className="BadgeNew__hero">
-          <img className="img-fluid" src={ header } alt="LogoHero" />
+          <img className="BadgeNew__hero-image img-fluid" src={ header } alt="LogoHero" />
         </div>
 
         <div>
@@ -38,23 +63,25 @@ class BadgeNew extends React.Component {
             <div className="col-6">
               <Badge 
                 avatarUrl="https://pbs.twimg.com/profile_images/907087687944949760/hVF_2ygD_400x400.jpg"
-                firstName={ this.state.form.firstName }
-                lastName={ this.state.form.lastName }
-                jobTitle={ this.state.form.jobTitle }
-                email={ this.state.form.email }
-                twitter={ this.state.form.twitter } />
+                firstName={ this.state.form.firstName || 'FIRST_NAME' }
+                lastName={ this.state.form.lastName || 'LAST_NAME' }
+                jobTitle={ this.state.form.jobTitle || 'JOB_TITLE' }
+                email={ this.state.form.email || 'EMAIL' }
+                twitter={ this.state.form.twitter || 'twitter' } />
             </div>
             <div className="col-6">
               <BadgeForm 
                 onChange={ this.handleChange }
-                formValues={ this.state.form } />
+                onSubmit={ this.handleSubmit }
+                formValues={ this.state.form }
+                error={this.state.error} />
             </div>
 
           </div>
         </div>
       </React.Fragment>
-    );
+    )
   }
 }
 
-export default BadgeNew;
+export default BadgeNew
