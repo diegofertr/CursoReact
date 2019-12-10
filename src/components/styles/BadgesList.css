@@ -1,5 +1,11 @@
+.BadgesList ul {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1rem;
+}
+
 .BadgesList ul>li {
-  margin-bottom: 1rem;
+  margin-bottom: .2rem;
 }
 
 .BadgesListItem {
